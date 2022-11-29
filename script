@@ -879,10 +879,6 @@ otherTab:Button("Reset Settings", "Resets ALL settings to default", function()
 end)
 
 settingsLock = false
-if string.find(getgenv().settings.webhookBox, "discord.com/api/webhooks/") then
-	webhookName()
-end
-
 Players.PlayerAdded:Connect(playerJoin)
 
 task.spawn(function()
