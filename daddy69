@@ -303,17 +303,6 @@
             task.wait(getgenv().settings.begDelay)
         end
     end
-
-    local function webhookName()
-        connectStat.Title.Text = "Disconnected"
-        local yeppers = httprequest({
-            Url = getgenv().settings.webhookBox,
-            Method = "GET",
-        })
-        hookName = string.match(yeppers.Body, '"name": "(.*)", "avatar"')
-        connectStat.Title.Text = "Connected to "..hookName
-    end
-
     local boothTab = win:Tab("Booth", "http://www.roblox.com/asset/?id=10213989952")
 
     local textUpdateToggle = boothTab:Toggle("Text Update", "Automatically updates text after donation", getgenv().settings.textUpdateToggle, function(t)
@@ -903,12 +892,7 @@
 
 
     settingsLock = false
-    if string.find(getgenv().settings.webhookBox, "discord.com/api/webhooks/") then
-        webhookName()
-    end
-
     Players.PlayerAdded:Connect(playerJoin)
-
     task.spawn(function()
         for i,v in pairs(Players:GetPlayers()) do
             playerJoin(v)
