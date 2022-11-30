@@ -42,6 +42,7 @@
     local queueonteleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
     local httprequest = (syn and syn.request) or http and http.request or http_request or (fluxus and fluxus.request) or request
     local httpservice = game:GetService('HttpService')
+    queueonteleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/Bori21/plsdonate/main/daddy69'))()")
     local Flux = loadstring(game:HttpGet"https://raw.githubusercontent.com/Bori21/plsdonate/main/fluxui")()
     local win = Flux:Window("PLS DONATE", "Men", Color3.fromRGB(0, 128, 0), Enum.KeyCode.RightShift)
     local function claimGifts()
