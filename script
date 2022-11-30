@@ -48,8 +48,8 @@ local Flux = loadstring(game:HttpGet"https://raw.githubusercontent.com/Bori21/pl
 local win = Flux:Window("PLS DONATE", "Man", Color3.fromRGB(0, 128, 0), Enum.KeyCode.RightShift)
 local function claimGifts()
 	pcall(function()
-		Players.LocalPlayer:WaitForChild("PlayerGui")
-		local guipath = Players.LocalPlayer.PlayerGui:WaitForChild("ScreenGui")
+		game.Players.LocalPlayer:WaitForChild("PlayerGui")
+		local guipath = game.Players.LocalPlayer.PlayerGui:WaitForChild("ScreenGui")
 		firesignal(guipath.GiftAlert.Buttons.Close["Activated"])
 		local count = require(game.ReplicatedStorage.Remotes).Event("UnclaimedDonationCount"):InvokeServer()
 		while count == nil do
@@ -63,7 +63,7 @@ local function claimGifts()
 			end
 			if #ud > 0 then
 				firesignal(guipath.Gift.Buttons.Inbox["Activated"])
-				Players.LocalPlayer.ClaimDonation:InvokeServer(ud)
+				game.Players.LocalPlayer.ClaimDonation:InvokeServer(ud)
 				task.wait(.5)
 				firesignal(guipath.GiftInbox.Buttons.Close["Activated"])
 				task.wait(.5)
@@ -87,7 +87,7 @@ end
 
 if isfile("plsdonategui/userProfiles/toggled.txt") then
 	if readfile("plsdonategui/userProfiles/toggled.txt") == "true" then
-		settingFile = tostring("plsdonategui/userProfiles/".. Players.LocalPlayer.UserId.. ".txt")
+		settingFile = tostring("plsdonategui/userProfiles/".. game.Players.LocalPlayer.UserId.. ".txt")
 	end
 else
 	writefile("plsdonategui/userProfiles/toggled.txt", "false")
@@ -147,7 +147,7 @@ end
 
 local function serverHop()
 	if getgenv().settings.webhookshop then
-		webhook(tostring("["..Players.LocalPlayer.DisplayName.."] Attempting to server hop"))
+		webhook(tostring("["..game.Players.LocalPlayer.DisplayName.."] Attempting to server hop"))
 	end
 	local gameId = "8737602449"
 	if vcEnabled and getgenv().settings.vcServer then
@@ -164,10 +164,10 @@ local function serverHop()
 		end
 	end
 	if #servers > 0 then
-		game:GetService("TeleportService"):TeleportToPlaceInstance(gameId, servers[math.random(1, #servers)], Players.LocalPlayer)
+		game:GetService("TeleportService"):TeleportToPlaceInstance(gameId, servers[math.random(1, #servers)], game.Players.LocalPlayer)
 	end
 	game:GetService("TeleportService").TeleportInitFailed:Connect(function()
-		game:GetService("TeleportService"):TeleportToPlaceInstance(gameId, servers[math.random(1, #servers)], Players.LocalPlayer)
+		game:GetService("TeleportService"):TeleportToPlaceInstance(gameId, servers[math.random(1, #servers)], game.Players.LocalPlayer)
 	end)
 end
 
@@ -195,7 +195,7 @@ end
 --Booth update function
 local function update(ok)
 	local text, colll
-	local current = Players.LocalPlayer.leaderstats.Raised.Value
+	local current = game.Players.LocalPlayer.leaderstats.Raised.Value
 	local goal = current + tonumber(getgenv().settings.goalBox)
 
 	--Roblox Censorship :)
@@ -235,7 +235,7 @@ local function update(ok)
 		end
 		boothText = tostring('<font face="'.. getgenv().settings.fontFace.. '" size="'.. getgenv().settings.fontSize ..'" color="#'.. colll ..'">'.. text.. '</font>')
 		--Updates the booth text
-		local myBooth = Players.LocalPlayer.PlayerGui.MapUIContainer.MapUI.BoothUI:FindFirstChild(tostring("BoothUI".. unclaimed[1]))
+		local myBooth = game.Players.LocalPlayer.PlayerGui.MapUIContainer.MapUI.BoothUI:FindFirstChild(tostring("BoothUI".. unclaimed[1]))
 		if myBooth.Sign.TextLabel.Text ~= boothText then
 			if string.find(myBooth.Sign.TextLabel.Text, "# #") or string.find(myBooth.Sign.TextLabel.Text, "##") then
 				require(game.ReplicatedStorage.Remotes).Event("SetBoothText"):FireServer("your text here", "booth")
@@ -480,7 +480,7 @@ end)
 
 
 pcall(function()
-	if game:GetService("MarketplaceService"):UserOwnsGamePassAsync(Players.LocalPlayer.UserId, 28460459) then
+	if game:GetService("MarketplaceService"):UserOwnsGamePassAsync(game.Players.LocalPlayer.UserId, 28460459) then
 		signPass = true
 	end
 end)
@@ -492,9 +492,9 @@ if signPass then
 		getgenv().settings.signToggle = t
 		saveSettings()
 		if t then
-			Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):EquipTool(Players.LocalPlayer.Backpack:FindFirstChild("DonateSign"))
+			Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):EquipTool(game.Players.LocalPlayer.Backpack:FindFirstChild("DonateSign"))
 		else
-			Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):UnequipTools(Players.LocalPlayer.Backpack:FindFirstChild("DonateSign"))
+			Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):UnequipTools(game.Players.LocalPlayer.Backpack:FindFirstChild("DonateSign"))
 		end
 	end)
 
@@ -753,7 +753,7 @@ end)
 
 
 pcall(function()
-	if game:GetService("VoiceChatService"):IsVoiceEnabledForUserIdAsync(Players.LocalPlayer.UserId) or getgenv().vcbp then
+	if game:GetService("VoiceChatService"):IsVoiceEnabledForUserIdAsync(game.Players.LocalPlayer.UserId) or getgenv().vcbp then
 		vcEnabled = true
 	end
 end)
@@ -798,6 +798,15 @@ serverHopTab:Label("Server hopping has a chance to crash your game\nRecommended 
 
 
 local otherTab = win:Tab("Other", "http://www.roblox.com/asset/?id=10213989952")
+
+otherTab:Button("Discord Server", "Copies Discord server link", function()
+	local cboard = setclipboard or toclipboard or set_clipboard or (Clipboard and Clipboard.set)
+	if cboard then
+		cboard("https://discord.gg/WMEqDAdtSa")
+	end
+	Flux:Notification("Copied to clipboard", "https://discord.gg/WMEqDAdtSa", "Okay")
+end)
+
 otherTab:Line()
 
 local danceDropdown = otherTab:Dropdown("Dance", {"Disabled","1","2", "3"}, false, function(t)
@@ -805,11 +814,11 @@ local danceDropdown = otherTab:Dropdown("Dance", {"Disabled","1","2", "3"}, fals
 	getgenv().settings.danceChoice = t
 	saveSettings()
 	if t == "Disabled" then
-		Players:Chat("/e wave")
+	game.Players:Chat("/e wave")
 	elseif t == "1" then
-		Players:Chat("/e dance")
+	game.Players:Chat("/e dance")
 	else
-		Players:Chat("/e dance".. t)
+	game.Players:Chat("/e dance".. t)
 	end
 end)
 
@@ -870,16 +879,16 @@ otherTab:Button("Reset Settings", "Resets ALL settings to default", function()
 end)
 
 settingsLock = false
-Players.PlayerAdded:Connect(playerJoin)
+game.Players.PlayerAdded:Connect(playerJoin)
 
 task.spawn(function()
-	for i,v in pairs(Players:GetPlayers()) do
+	for i,v in pairs(game.Players:GetPlayers()) do
 		playerJoin(v)
 	end
 end)
 
 local function findUnclaimed()
-	for i, v in pairs(Players.LocalPlayer.PlayerGui.MapUIContainer.MapUI.BoothUI:GetChildren()) do
+	for i, v in pairs(game.Players.LocalPlayer.PlayerGui.MapUIContainer.MapUI.BoothUI:GetChildren()) do
 		if (v.Details.Owner.Text == "unclaimed") then
 			table.insert(unclaimed, tonumber(string.match(tostring(v), "%d+")))
 		end
@@ -892,9 +901,9 @@ local claimCount = #unclaimed
 --Claim booth function
 local function boothclaim()
 	require(game.ReplicatedStorage.Remotes).Event("ClaimBooth"):InvokeServer(unclaimed[1])
-	if not string.find(Players.LocalPlayer.PlayerGui.MapUIContainer.MapUI.BoothUI:FindFirstChild(tostring("BoothUI".. unclaimed[1])).Details.Owner.Text, Players.LocalPlayer.DisplayName) then
+	if not string.find(game.Players.LocalPlayer.PlayerGui.MapUIContainer.MapUI.BoothUI:FindFirstChild(tostring("BoothUI".. unclaimed[1])).Details.Owner.Text, game.Players.LocalPlayer.DisplayName) then
 		task.wait(1)
-		if not string.find(Players.LocalPlayer.PlayerGui.MapUIContainer.MapUI.BoothUI:FindFirstChild(tostring("BoothUI".. unclaimed[1])).Details.Owner.Text, Players.LocalPlayer.DisplayName) then
+		if not string.find(game.Players.LocalPlayer.PlayerGui.MapUIContainer.MapUI.BoothUI:FindFirstChild(tostring("BoothUI".. unclaimed[1])).Details.Owner.Text, game.Players.LocalPlayer.DisplayName) then
 			error()
 		end
 	end
@@ -911,57 +920,57 @@ end
 hopSet()
 --Walks to booth
 game:GetService('VirtualInputManager'):SendKeyEvent(true, "LeftControl", false, game)
-local Controls = require(Players.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule")):GetControls()
+local Controls = require(game.Players.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule")):GetControls()
 Controls:Disable()
-Players.LocalPlayer.Character.Humanoid:MoveTo(Vector3.new(booths[tostring(unclaimed[1])]:match("(.+), (.+), (.+)")))
+game.Players.LocalPlayer.Character.Humanoid:MoveTo(Vector3.new(booths[tostring(unclaimed[1])]:match("(.+), (.+), (.+)")))
 local atBooth = false
 local function noclip()
-	for i,v in pairs(Players.LocalPlayer.Character:GetDescendants()) do
+	for i,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
 		if v:IsA("BasePart") then
 			v.CanCollide = false
 		end
 	end
 end
 local noclipper = game:GetService("RunService").Stepped:Connect(noclip)
-Players.LocalPlayer.Character.Humanoid.MoveToFinished:Connect(function(reached)
+game.Players.LocalPlayer.Character.Humanoid.MoveToFinished:Connect(function(reached)
 	atBooth = true
 end)
 while not atBooth do
 	task.wait(.1)
-	if Players.LocalPlayer.Character.Humanoid:GetState() == Enum.HumanoidStateType.Seated then
-		Players.LocalPlayer.Character.Humanoid.Jump = true
+	if game.Players.LocalPlayer.Character.Humanoid:GetState() == Enum.HumanoidStateType.Seated then
+		game.Players.LocalPlayer.Character.Humanoid.Jump = true
 	end
 end
 Controls:Enable()
 game:GetService('VirtualInputManager'):SendKeyEvent(false, "LeftControl", false, game)
 noclipper:Disconnect()
-Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new(Players.LocalPlayer.Character.HumanoidRootPart.Position, Vector3.new(40, 14, 101)))
+game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new(game.Players.LocalPlayer.Character.HumanoidRootPart.Position, Vector3.new(40, 14, 101)))
 require(game.ReplicatedStorage.Remotes).Event("RefreshItems"):InvokeServer()
 
 if getgenv().settings.signToggle and signPass then
-	Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):EquipTool(Players.LocalPlayer.Backpack:FindFirstChild("DonateSign"))
+	game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):EquipTool(game.Players.LocalPlayer.Backpack:FindFirstChild("DonateSign"))
 end
 if getgenv().settings.danceChoice == "1" then
 	task.wait(.25)
-	Players:Chat("/e dance")
+	game.Players:Chat("/e dance")
 else
 	task.wait(.25)
-	Players:Chat("/e dance".. getgenv().settings.danceChoice)
+	game.Players:Chat("/e dance".. getgenv().settings.danceChoice)
 end
 
 if getgenv().settings.autoBeg then
 	spamming = task.spawn(begging)
 end
-local RaisedC = Players.LocalPlayer.leaderstats.Raised.value
-Players.LocalPlayer.leaderstats.Raised.Changed:Connect(function(newRaised)
+local RaisedC = game.Players.LocalPlayer.leaderstats.Raised.value
+game.Players.LocalPlayer.leaderstats.Raised.Changed:Connect(function(newRaised)
 	if getgenv().settings.webhookToggle and getgenv().settings.webhookBox then
 		local LogService = Game:GetService("LogService")
 		local logs = LogService:GetLogHistory()
 		--Tries to grabs donation message from logs
-		if string.find(logs[#logs].message, Players.LocalPlayer.DisplayName) then
+		if string.find(logs[#logs].message, game.Players.LocalPlayer.DisplayName) then
 			webhook(tostring(logs[#logs].message.. " (Total: ".. newRaised.. ")"))
 		else
-			webhook(tostring("? Somebody tipped ".. newRaised - RaisedC.. " Robux to ".. Players.LocalPlayer.DisplayName.. " (Total: " .. newRaised.. ")"))
+			webhook(tostring("? Somebody tipped ".. newRaised - RaisedC.. " Robux to ".. game.Players.LocalPlayer.DisplayName.. " (Total: " .. newRaised.. ")"))
 		end
 	end
 	--serverWebhook("Someone using one of the free PLS Donate scripts earned: "..tostring(newRaised - RaisedC).." robux!")
@@ -974,12 +983,11 @@ Players.LocalPlayer.leaderstats.Raised.Changed:Connect(function(newRaised)
 		end)
 	end
 	if getgenv().settings.autoJumpPerRobux then
-		task.spawn(function()
-			task.wait(1)
+task.spawn(function()
 			for i = 1, tonumber(newRaised - RaisedC), 1 do
-				Players.LocalPlayer.Character.Humanoid.Jump = true
+				game.Players.LocalPlayer.Character.Humanoid.Jump = true
 				task.wait(1)
-			end
+			end 
 			task.wait(1)
 			game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Did "..tostring(newRaised - RaisedC).. " jumps!".." Current Jumps: "..tostring(newRaised),"All")
 		end)
