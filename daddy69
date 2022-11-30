@@ -1026,9 +1026,10 @@
                     end
                     if message then
                         donoName = string.match(message, 'ð° (.*) tipped')
-                    end
-                    local tymessage = string.gsub (getgenv().settings.thanksMessage[math.random(#getgenv().settings.thanksMessage)], "$D", donoName)
-                    game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(tymessage,"All")
+                    end 
+                    local sex =  {"Thank you","Thanks!","ty :)","tysm!"}
+                    local nigger = sex[math.random(1,#sex)]
+                    game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(nigger,"All")
                 end
 
             end)
