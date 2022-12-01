@@ -984,7 +984,7 @@ game.Players.LocalPlayer.leaderstats.Raised.Changed:Connect(function(newRaised)
 	end
 	if getgenv().settings.autoJumpPerRobux then
 task.spawn(function()
-			for i = 1, tonumber(newRaised - RaisedC), 1 do
+			for i = 1, tonumber(newRaised), 1 do
 				game.Players.LocalPlayer.Character.Humanoid.Jump = true
 				task.wait(1)
 			end 
