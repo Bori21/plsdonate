@@ -1,4 +1,3 @@
-
 --Wait until game loads
 repeat
 	wait()
@@ -46,7 +45,7 @@ local httprequest = (syn and syn.request) or http and http.request or http_reque
 local httpservice = game:GetService('HttpService')
 queueonteleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/Bori21/plsdonate/main/script'))()")
 local Flux = loadstring(game:HttpGet"https://raw.githubusercontent.com/Bori21/plsdonate/main/fluxui")()
-local win = Flux:Window("PLS DONATE", "Man2", Color3.fromRGB(0, 128, 0), Enum.KeyCode.RightShift)
+local win = Flux:Window("PLS DONATE", "Man", Color3.fromRGB(0, 128, 0), Enum.KeyCode.RightShift)
 local function claimGifts()
 	pcall(function()
 		game.Players.LocalPlayer:WaitForChild("PlayerGui")
@@ -974,22 +973,20 @@ game.Players.LocalPlayer.leaderstats.Raised.Changed:Connect(function(newRaised)
 	end
 	--serverWebhook("Someone using one of the free PLS Donate scripts earned: "..tostring(newRaised - RaisedC).." robux!")
 	hopSet()
-	game.Players.LocalPlayer.leaderstats.Raised.Changed:Connect(function(newRaised)
 	if getgenv().settings.autoThanks then
 		task.spawn(function()
 			task.wait(getgenv().settings.thanksDelay)
 			game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(getgenv().settings.thanksMessage[math.random(#getgenv().settings.thanksMessage)],"All")
 		end)
 	end
-	if getgenv().settings.autoJumpPerRobux then
-local RaisedC = game.Players.LocalPlayer.leaderstats.Raised.value
-game.Players.LocalPlayer.leaderstats.Raised.Changed:Connect(function(newbobux)
-for i = 1, tonumber(newbobux - RaisedC), 1 do
+local RaisedW = game.Players.LocalPlayer.leaderstats.Raised.value
+game.Players.LocalPlayer.leaderstats.Raised.Changed:Connect(function(newRaised2)
+if getgenv().settings.autoJumpPerRobux then
+for i = 1, tonumber(newRaised2 - RaisedW), 1 do
 game.Players.LocalPlayer.Character.Humanoid.Jump = true
 wait(1) end
-game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Did "..tostring(newbobux - RaisedC).. " jumps!".." Current Jumps: "..tostring(RaisedC),"All") 
-end)
-end end)
+game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Did "..tostring(newRaised2).. " jumps!".." Current Jumps: "..tostring(RaisedW),"All")
+	end
 	task.wait(getgenv().settings.textUpdateDelay)
 	update()
 end)
