@@ -787,8 +787,6 @@ end)
 
 
 serverHopTab:Button("Server Hop", "Changes servers", function()
-	if settingsLock then return end
-	Flux:closeUi()
 	serverHop()
 end)
 
