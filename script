@@ -989,7 +989,7 @@ game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
 	end
 	task.wait(getgenv().settings.textUpdateDelay)
 	update()
-end)
+end) end)
 update()
 while task.wait(getgenv().settings.serverHopDelay * 60) do
 	if not hopTimer then
