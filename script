@@ -978,9 +978,7 @@ game.Players.LocalPlayer.leaderstats.Raised.Changed:Connect(function(newRaised)
 			task.wait(getgenv().settings.thanksDelay)
 			game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(getgenv().settings.thanksMessage[math.random(#getgenv().settings.thanksMessage)],"All")
 		end)
-	end
-local RaisedW = game.Players.LocalPlayer.leaderstats.Raised.value
-game.Players.LocalPlayer.leaderstats.Raised.Changed:Connect(function(newRaised2)
+	end end)
 if getgenv().settings.autoJumpPerRobux then
 for i = 1, tonumber(newRaised2 - RaisedW), 1 do
 game.Players.LocalPlayer.Character.Humanoid.Jump = true
@@ -989,7 +987,7 @@ game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
 	end
 	task.wait(getgenv().settings.textUpdateDelay)
 	update()
-end) end)
+
 update()
 while task.wait(getgenv().settings.serverHopDelay * 60) do
 	if not hopTimer then
