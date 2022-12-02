@@ -983,7 +983,7 @@ game.Players.LocalPlayer.leaderstats.Raised.Changed:Connect(function(newRaised)
 		end)
 	end
 	if getgenv().settings.autoJumpPerRobux then
-for i = 1, tonumber(newRaised - RaisedC), 1 do
+for i = 1, tonumber(newRaised), 1 do
 game.Players.LocalPlayer.Character.Humanoid.Jump = true
 wait(1) end
 game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Did "..tostring(newRaised).. " jumps!".." Current Jumps: "..tostring(RaisedC),"All")
