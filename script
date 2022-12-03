@@ -959,18 +959,36 @@ end
 if getgenv().settings.autoBeg then
 	spamming = task.spawn(begging)
 end
-local RaisedC = game.Players.LocalPlayer.leaderstats.Raised.value
-game.Players.LocalPlayer.leaderstats.Raised.Changed:Connect(function(newRaised)
-	if getgenv().settings.webhookToggle and getgenv().settings.webhookBox then
-		local LogService = Game:GetService("LogService")
-		local logs = LogService:GetLogHistory()
-		--Tries to grabs donation message from logs
-		if string.find(logs[#logs].message, game.Players.LocalPlayer.DisplayName) then
-			webhook(tostring(logs[#logs].message.. " (Total: ".. newRaised.. ")"))
-		else
-			webhook(tostring("? Somebody tipped ".. newRaised - RaisedC.. " Robux to ".. game.Players.LocalPlayer.DisplayName.. " (Total: " .. newRaised.. ")"))
-		end
-	end
+local RaisedC = Players.LocalPlayer.leaderstats.Raised.value
+    Players.LocalPlayer.leaderstats.Raised.Changed:Connect(function(newRaised)
+        if getgenv().settings.webhookToggle and getgenv().settings.webhookBox then
+            task.spawn(function()
+                local message, amount
+                local sent = false
+                task.wait(1)
+                local logs = game:GetService("LogService"):GetLogHistory()
+                for i = 0, 4 do
+                    if string.find(logs[#logs - i].message, Players.LocalPlayer.DisplayName) then
+                        message = logs[#logs - i].message
+                        amount = string.gsub(string.match(message, 'tipped (.*) Robux'), ",", "")
+                        if getgenv().settings.shortMessage then
+                            webhook(tostring(Players.LocalPlayer.DisplayName..": "..amount.." *[A/T: "..math.floor(tonumber(amount) * 0.6).."]* (T: "..newRaised..")"))
+                        else
+                            webhook(tostring(message.." *[After Tax: "..math.floor(tonumber(amount) * 0.6).."]* (Total: "..newRaised..")"))
+                        end
+                        sent = true
+                        break
+                    end
+                end
+                if not sent then
+                    amount = newRaised - RaisedC
+                    if getgenv().settings.shortMessage then
+                        webhook(tostring(Players.LocalPlayer.DisplayName..": "..amount.." *[A/T: "..math.floor(amount * 0.6).."]* (T: "..newRaised..")"))
+                    else
+                        webhook(tostring("ð° Somebody tipped "..amount.." Robux to "..Players.LocalPlayer.DisplayName.." *[After Tax: "..math.floor(amount * 0.6).."]* (Total: " ..newRaised..")"))
+                    end
+                end
+                RaisedC = newRaised
 	--serverWebhook("Someone using one of the free PLS Donate scripts earned: "..tostring(newRaised - RaisedC).." robux!")
 	hopSet()
 	if getgenv().settings.autoThanks then
