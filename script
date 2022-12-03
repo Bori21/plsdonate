@@ -982,11 +982,6 @@ local RaisedC = Players.LocalPlayer.leaderstats.Raised.value
                 end
                 if not sent then
                     amount = newRaised - RaisedC
-                    if getgenv().settings.shortMessage then
-                        webhook(tostring(Players.LocalPlayer.DisplayName..": "..amount.." *[A/T: "..math.floor(amount * 0.6).."]* (T: "..newRaised..")"))
-                    else
-                        webhook(tostring("ð° Somebody tipped "..amount.." Robux to "..Players.LocalPlayer.DisplayName.." *[After Tax: "..math.floor(amount * 0.6).."]* (Total: " ..newRaised..")"))
-                    end
                 end
                 RaisedC = newRaised
 	--serverWebhook("Someone using one of the free PLS Donate scripts earned: "..tostring(newRaised - RaisedC).." robux!")
@@ -1001,7 +996,7 @@ if getgenv().settings.autoJumpPerRobux then
 for i = 1, tonumber(newRaised - RaisedC), 1 do
 game.Players.LocalPlayer.Character.Humanoid.Jump = true
 wait(1) end
-game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Did "..tostring(newRaised2).. " jumps!".." Current Jumps: "..tostring(RaisedW),"All")
+game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Did "..tostring(newRaised).. " jumps!".." Current Jumps: "..tostring(RaisedC),"All")
 	end end)
 	task.wait(getgenv().settings.textUpdateDelay)
 	update()
@@ -1011,4 +1006,4 @@ while task.wait(getgenv().settings.serverHopDelay * 60) do
 	if not hopTimer then
 		hopSet()
 	end
-end
+end end end)
