@@ -128,10 +128,14 @@ if #getgenv().settings ~= sNames then
 end
 
 --Save Settings
+local settingsLock = true
 local function saveSettings()
+	if settingsLock == false then
 		print('Settings saved.')
 		writefile(settingFile, httpservice:JSONEncode(getgenv().settings))
 	end
+end
+
 local function webhook(msg)
 	httprequest({
 		Url = getgenv().settings.webhookBox,
@@ -305,6 +309,7 @@ local boothTab = win:Tab("Booth", "http://www.roblox.com/asset/?id=10213989952")
 local testDropdown
 
 local textUpdateToggle = boothTab:Toggle("Text Update", "Automatically updates text after donation", getgenv().settings.textUpdateToggle, function(t)
+	if settingsLock then return end
 	getgenv().settings.textUpdateToggle = t
 	saveSettings()
 	if t then
@@ -313,19 +318,21 @@ local textUpdateToggle = boothTab:Toggle("Text Update", "Automatically updates t
 end)
 
 local textUpdateDelay = boothTab:Slider("Update Delay (S)", "How long to wait after donation to update", 0, 120,getgenv().settings.textUpdateDelay, function(t)
-
+	if settingsLock then return end
 	getgenv().settings.textUpdateDelay = t
 	slider(getgenv().settings.textUpdateDelay, "textUpdateDelay")
 end)
 
 local colorsplit = string.split(getgenv().settings.colorBox, ', ')
 local colorBox = boothTab:Colorpicker("Text Color", Color3.new(tonumber(colorsplit[1]), tonumber(colorsplit[2]), tonumber(colorsplit[3])), function(t)
+	if settingsLock then return end
 	t = tostring(t)
 	getgenv().settings.colorBox = t
 	slider(getgenv().settings.colorBox, "colorBox")
 end)
 
 local randomToggle = boothTab:Toggle("Random Color", "Uses a random color instead", getgenv().settings.randomToggle, function(t)
+	if settingsLock then return end
 	getgenv().settings.randomToggle = t
 	saveSettings()
 	update()
@@ -381,12 +388,14 @@ local fonts = {
 }
 
 boothTab:Dropdown("Font Face", fonts, true, function(t)
+	if settingsLock then return end
 	getgenv().settings.fontFace = t
 	saveSettings()
 	update("booth")
 end)
 
 boothTab:Textbox("Font Size", "font size", false, getgenv().settings.fontSize, function(t)
+	if settingsLock then return end
 	if tonumber(t) then
 		getgenv().settings.fontSize = tonumber(t)
 		saveSettings()
@@ -395,6 +404,7 @@ boothTab:Textbox("Font Size", "font size", false, getgenv().settings.fontSize, f
 end)
 
 local goalBox = boothTab:Textbox("Goal Increase", "Amount to increase your goal by", false, getgenv().settings.goalBox, function(t)
+	if settingsLock then return end
 	if tonumber(t) then
 		getgenv().settings.goalBox = tonumber(t)
 		saveSettings()
@@ -478,6 +488,7 @@ if signPass then
 	local signTab = win:Tab("Sign", "http://www.roblox.com/asset/?id=10213989952")
 
 	local signToggle = signTab:Toggle("Equip Sign", "Equips your sign", getgenv().settings.signToggle, function(t)
+		if settingsLock then return end
 		getgenv().settings.signToggle = t
 		saveSettings()
 		if t then
@@ -488,6 +499,7 @@ if signPass then
 	end)
 
 	local signUpdateToggle = signTab:Toggle("Text Update", "Automatically updates text after donation", getgenv().settings.signUpdateToggle, function(t)
+		if settingsLock then return end
 		getgenv().settings.signUpdateToggle = t
 		saveSettings()
 		if t then
@@ -497,6 +509,7 @@ if signPass then
 
 	local colorsplitAgain = string.split(getgenv().settings.signColorBox, ', ')
 	local signColorBox = signTab:Colorpicker("Text Color", Color3.new(tonumber(colorsplitAgain[1]), tonumber(colorsplitAgain[2]), tonumber(colorsplitAgain[3])), function(t)
+		if settingsLock then return end
 		t = tostring(t)
 		getgenv().settings.signColorBox = t
 		slider(getgenv().settings.signColorBox, "signColorBox")
@@ -562,17 +575,19 @@ end
 local chatTab = win:Tab("Chat", "http://www.roblox.com/asset/?id=10213989952")
 
 local autoThanks = chatTab:Toggle("Auto Thanks", "Automatically sends a thank you message after donation", getgenv().settings.autoThanks, function(t)
+	if settingsLock then return end
 	getgenv().settings.autoThanks = t
 	saveSettings()
 end)
 
 local thanksDelay = chatTab:Slider("Thanks Delay (S)", "How long to wait after donation to send message", 0, 120,getgenv().settings.thanksDelay,function(t)
+	if settingsLock then return end
 	getgenv().settings.thanksDelay = t
 	slider(getgenv().settings.thanksDelay, "thanksDelay")
 end)
 
 local autoJumpPerRobux = chatTab:Toggle("Auto Jump Per Robux", "Start jumping the amount of times you got donated", getgenv().settings.autoJumpPerRobux, function(t)
-
+	if settingsLock then return end
 	getgenv().settings.autoJumpPerRobux = t
 	saveSettings()
 end)
@@ -618,7 +633,7 @@ end)
 chatTab:Line()
 
 local autoBeg = chatTab:Toggle("Auto Beg", "Automatically begs in chat", getgenv().settings.autoBeg, function(t)
-
+	if settingsLock then return end
 	getgenv().settings.autoBeg = t
 	saveSettings()
 	if t then
@@ -629,7 +644,7 @@ local autoBeg = chatTab:Toggle("Auto Beg", "Automatically begs in chat", getgenv
 end)
 
 local begDelay = chatTab:Slider("Beg Delay (S)", "How long to wait in between begging messages", 0, 300,getgenv().settings.begDelay,function(t)
-
+	if settingsLock then return end
 	getgenv().settings.begDelay = t
 	slider(getgenv().settings.begDelay, "begDelay")
 
@@ -696,7 +711,7 @@ chatTab:Line()
 local webhookTab = win:Tab("Webhook", "http://www.roblox.com/asset/?id=10213989952")
 
 local webhookBox = webhookTab:Textbox("Webhook", 'Put your Discord Webhook URL here for notifications', true, "", function(t)
-
+	if settingsLock then return end
 	if string.find(t, "discord.com/api/webhooks/") then
 		getgenv().settings.webhookBox = t;
 		webhookName()
@@ -710,19 +725,19 @@ connectStat = webhookTab:Label("Disconnected", 15)
 webhookTab:Line()
 
 local webhookToggle = webhookTab:Toggle("Donation", "Donation Notifications", getgenv().settings.webhookToggle, function(t)
-
+	if settingsLock then return end
 	getgenv().settings.webhookToggle = t
 	saveSettings()
 end)
 
 local webhookshop = webhookTab:Toggle("Server Hop", "Server Hop Notifications", getgenv().settings.webhookshop, function(t)
-
+	if settingsLock then return end
 	getgenv().settings.webhookshop = t
 	saveSettings()
 end)
 
 local webhookErr = webhookTab:Toggle("Errors", "Error Notifications", getgenv().webhookErr, function(t)
-
+	if settingsLock then return end
 	--TODO:
 	getgenv().settings.webhookErr = t
 	saveSettings()
@@ -745,27 +760,27 @@ end)
 local serverHopTab = win:Tab("Server", "http://www.roblox.com/asset/?id=10213989952")
 
 local serverHopDelay = serverHopTab:Slider("Server Hop Delay (M)", "How long to wait for donations before server change\n0 = Disabled", 0, 120,getgenv().settings.serverHopDelay,function(t)
-
+	if settingsLock then return end
 	getgenv().settings.serverHopDelay = t
 	slider(getgenv().settings.serverHopDelay, "serverHopDelay")
 end)
 
 if vcEnabled then
 	local vcToggle = serverHopTab:Toggle("VC Servers", "Toggles voice chat servers", getgenv().settings.vcServer, function(t)
-	
+		if settingsLock then return end
 		getgenv().settings.vcServer = t
 		saveSettings()
 	end)
 end
 
 serverHopTab:Toggle("Staff Join", "Server hops if a staff member joins the game", getgenv().settings.staffHop, function(t)
-
+	if settingsLock then return end
 	getgenv().settings.staffHop = t
 	saveSettings()
 end)
 
 serverHopTab:Toggle("Booth Censor", "Server hops if your booth or sign gets censored", getgenv().settings.censorHop, function(t)
-
+	if settingsLock then return end
 	getgenv().settings.censorHop = t
 	saveSettings()
 end)
@@ -793,7 +808,7 @@ end)
 otherTab:Line()
 
 local danceDropdown = otherTab:Dropdown("Dance", {"Disabled","1","2", "3"}, false, function(t)
-
+	if settingsLock then return end
 	getgenv().settings.danceChoice = t
 	saveSettings()
 	if t == "Disabled" then
@@ -827,7 +842,7 @@ end)
 
 if setfpscap and type(setfpscap) == "function" then
 	local fpsLimit = otherTab:Slider("FPS Limit", "Limits FPS to decrease resource usage", 1, 60,getgenv().settings.fpsLimit,function(t)
-	
+		if settingsLock then return end
 		getgenv().settings.fpsLimit = t
 		setfpscap(t)
 		slider(getgenv().settings.fpsLimit, "fpsLimit")
@@ -840,7 +855,7 @@ otherTab:Toggle("Anonymous Mode", "Hides your donated amount on the leaderboard"
 	if t and not anToggled then
 		require(game.ReplicatedStorage.Remotes).Event("SetDonatedVisibility"):FireServer(false)
 	end
-
+	if settingsLock then return end
 	getgenv().settings.anonymous = t
 	saveSettings()
 end)
@@ -848,7 +863,7 @@ end)
 otherTab:Line()
 
 local userProfiles = otherTab:Toggle("Account Profiles", "Use different settings on every account", settingFile ~= "plsdonategui/settings.txt", function(t)
-
+	if settingsLock then return end
 	writefile("plsdonategui/userProfiles/toggled.txt", tostring(t))
 	task.wait(1)
 	Flux:closeUi()
@@ -861,6 +876,7 @@ otherTab:Button("Reset Settings", "Resets ALL settings to default", function()
 	serverHop()
 end)
 
+settingsLock = false
 game.Players.PlayerAdded:Connect(playerJoin)
 
 task.spawn(function()
