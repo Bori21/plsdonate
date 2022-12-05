@@ -983,7 +983,7 @@ local RaisedC = Players.LocalPlayer.leaderstats.Raised.value
                 if not sent then
                     amount = newRaised - RaisedC
                 end
-                RaisedC = newRaised
+                RaisedC = newRaised end)
 	--serverWebhook("Someone using one of the free PLS Donate scripts earned: "..tostring(newRaised - RaisedC).." robux!")
 	hopSet()
 	if getgenv().settings.autoThanks then
@@ -995,7 +995,7 @@ local RaisedC = Players.LocalPlayer.leaderstats.Raised.value
 local sece2 = game.Players.LocalPlayer.leaderstats.Raised.value
 game.Players.LocalPlayer.leaderstats.Raised.Changed:Connect(function(negger)
 if getgenv().settings.autoJumpPerRobux then
-for i = 1, tonumber(negger - sece2), 1 do
+for i = 1, tonumber(negger), 1 do
 game.Players.LocalPlayer.Character.Humanoid.Jump = true
 wait(1) end
 game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Did "..tostring(negger).. " jumps!".." Current Jumps: "..tostring(sece2),"All")
@@ -1008,4 +1008,4 @@ while task.wait(getgenv().settings.serverHopDelay * 60) do
 	if not hopTimer then
 		hopSet()
 	end
-end end) end end)
+end end end) 
