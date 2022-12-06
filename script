@@ -960,6 +960,7 @@ if getgenv().settings.autoBeg then
 	spamming = task.spawn(begging)
 end
 local RaisedC = Players.LocalPlayer.leaderstats.Raised.value
+local RaisedD = Players.LocalPlayer.leaderstats.Raised.value
     Players.LocalPlayer.leaderstats.Raised.Changed:Connect(function(newRaised)
         if getgenv().settings.webhookToggle and getgenv().settings.webhookBox then
             task.spawn(function()
@@ -994,7 +995,7 @@ local RaisedC = Players.LocalPlayer.leaderstats.Raised.value
 	end 
 if getgenv().settings.autoJumpPerRobux then
 task.spawn(function()
-			for i = 1, tonumber(newRaised), 1 do
+			for i = 1, tonumber(newRaised - RaisedD), 1 do
 				game.Players.LocalPlayer.Character.Humanoid.Jump = true
 				wait(1)
 			end 
