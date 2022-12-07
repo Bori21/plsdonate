@@ -999,7 +999,7 @@ task.spawn(function()
 				game.Players.LocalPlayer.Character.Humanoid.Jump = true
 				wait(1)
 			end 
-game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Did "..tostring(newRaised).. " jumps!".." Current Jumps: "..tostring(RaisedC),"All")
+game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Did "..tostring(newRaised - RaisedD).. " jumps!".." Current Jumps: "..tostring(RaisedD),"All")
 end) 
 	task.wait(getgenv().settings.textUpdateDelay)
 	update()
