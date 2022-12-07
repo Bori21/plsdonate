@@ -45,7 +45,7 @@ local httprequest = (syn and syn.request) or http and http.request or http_reque
 local httpservice = game:GetService('HttpService')
 queueonteleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/Bori21/plsdonate/main/script'))()")
 local Flux = loadstring(game:HttpGet"https://raw.githubusercontent.com/Bori21/plsdonate/main/fluxui")()
-local win = Flux:Window("PLS DONATE", "ohio", Color3.fromRGB(0, 128, 0), Enum.KeyCode.RightShift)
+local win = Flux:Window("PLS DONATE", "ohio31", Color3.fromRGB(0, 128, 0), Enum.KeyCode.RightShift)
 local function claimGifts()
 	pcall(function()
 		game.Players.LocalPlayer:WaitForChild("PlayerGui")
