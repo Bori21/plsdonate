@@ -949,11 +949,11 @@ if getgenv().settings.signToggle and signPass then
 	game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):EquipTool(game.Players.LocalPlayer.Backpack:FindFirstChild("DonateSign"))
 end
 if getgenv().settings.danceChoice == "1" then
-	task.wait(.25)
-	game.Players:Chat("/e dance")
+	wait(.25)
+	Players:Chat("/e dance")
 else
-	task.wait(.25)
-	game.Players:Chat("/e dance".. getgenv().settings.danceChoice)
+	wait(.25)
+	Players:Chat("/e dance".. getgenv().settings.danceChoice)
 end
 
 if getgenv().settings.autoBeg then
