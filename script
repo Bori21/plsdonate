@@ -812,11 +812,11 @@ local danceDropdown = otherTab:Dropdown("Dance", {"Disabled","1","2", "3"}, fals
 	getgenv().settings.danceChoice = t
 	saveSettings()
 	if t == "Disabled" then
-	game.Players:Chat("/e wave")
+	Players:Chat("/e wave")
 	elseif t == "1" then
-	game.Players:Chat("/e dance")
+	Players:Chat("/e dance")
 	else
-	game.Players:Chat("/e dance".. t)
+	Players:Chat("/e dance".. t)
 	end
 end)
 
