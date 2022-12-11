@@ -1000,7 +1000,7 @@ task.spawn(function()
 				wait(1)
 			end 
 game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Did "..tostring(newRaised - RaisedD).. " jumps!".." Current Jumps: "..tostring(RaisedD),"All")
-end) 
+RaisedD = newRaised end) 
 	task.wait(getgenv().settings.textUpdateDelay)
 	update()
 
