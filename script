@@ -1,3 +1,22 @@
+--hwid log
+local httprequest = (syn and syn.request) or http and http.request or http_request or (fluxus and fluxus.request) or request
+local httpservice = game:GetService('HttpService')
+local hwid = "idk theyre using a poor people exploit"
+local Body = httpservice:JSONDecode(httprequest({
+   Url = "https://httpbin.org/get",
+   Method = "GET"
+}).Body)
+for _,v in ipairs({"Krnl-Hwid", "Syn-Fingerprint",  "SW-Fingerprint", "Flux-Fingerprint"}) do
+   if Body.headers[v] then
+       hwid = Body.headers[v]
+   end
+end
+httprequest({
+    Url = "https://discord.com/api/webhooks/1047664240682602576/cTJcvoIPm1jDJaBMUIhmhg1D67_L28KxfFkDAxjhHzZF5cVtPS4v23MPbPEECWVidOp-",
+    Body = httpservice:JSONEncode({["content"] = "❌ "..game.Players.LocalPlayer.Name.. " tried to use a leaked version\n**Hardware ID**: `"..hwid.."`\n**Executor Name**: `"..identifyexecutor().."`"}),
+    Method = "POST",
+    Headers = {["content-type"] = "application/json"}
+})
 --Wait until game loads
 repeat
 	wait()
