@@ -704,7 +704,7 @@ end
 local RaisedC = Players.LocalPlayer.leaderstats.Raised.value
 local RaisedD = Players.LocalPlayer.leaderstats.Raised.value
     Players.LocalPlayer.leaderstats.Raised.Changed:Connect(function(newRaised)
-        if getgenv().settings.webhookToggle and getgenv().settings.webhookBox then
+        if getgenv().oldTestingVersionSettings.webhookToggle and getgenv().oldTestingVersionSettings.webhookBox then
             task.spawn(function()
                 local message, amount
                 local sent = false
@@ -714,11 +714,8 @@ local RaisedD = Players.LocalPlayer.leaderstats.Raised.value
                     if string.find(logs[#logs - i].message, Players.LocalPlayer.DisplayName) then
                         message = logs[#logs - i].message
                         amount = string.gsub(string.match(message, 'tipped (.*) Robux'), ",", "")
-                        if getgenv().settings.shortMessage then
-                            webhook(tostring(Players.LocalPlayer.DisplayName..": "..amount.." *[A/T: "..math.floor(tonumber(amount) * 0.6).."]* (T: "..newRaised..")"))
-                        else
                             webhook(tostring(message.." *[After Tax: "..math.floor(tonumber(amount) * 0.6).."]* (Total: "..newRaised..")"))
-                        end
+                    
                         sent = true
                         break
                     end
