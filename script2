@@ -703,29 +703,40 @@ if getgenv().oldTestingVersionSettings.autoBeg then
 end
 local RaisedC = Players.LocalPlayer.leaderstats.Raised.value
 local RaisedD = Players.LocalPlayer.leaderstats.Raised.value
-    game.Players.LocalPlayer.leaderstats.Raised.Changed:Connect(function(newRaised)
-        if getgenv().oldTestingVersionSettings.webhookToggle and getgenv().oldTestingVersionSettings.webhookBox then
+    Players.LocalPlayer.leaderstats.Raised.Changed:Connect(function(newRaised)
+        if getgenv().settings.webhookToggle and getgenv().settings.webhookBox then
             task.spawn(function()
                 local message, amount
                 local sent = false
                 task.wait(1)
                 local logs = game:GetService("LogService"):GetLogHistory()
                 for i = 0, 4 do
-                    if string.find(logs[#logs - i].message, game.Players.LocalPlayer.DisplayName) then
+                    if string.find(logs[#logs - i].message, Players.LocalPlayer.DisplayName) then
                         message = logs[#logs - i].message
                         amount = string.gsub(string.match(message, 'tipped (.*) Robux'), ",", "")
+                        if getgenv().settings.shortMessage then
+                            webhook(tostring(Players.LocalPlayer.DisplayName..": "..amount.." *[A/T: "..math.floor(tonumber(amount) * 0.6).."]* (T: "..newRaised..")"))
+                        else
                             webhook(tostring(message.." *[After Tax: "..math.floor(tonumber(amount) * 0.6).."]* (Total: "..newRaised..")"))
+                        end
                         sent = true
                         break
                     end
-                
+                end
                 if not sent then
                     amount = newRaised - RaisedC
-                RaisedC = newRaised 
-                      
-
+                end
+                RaisedC = newRaised end)
 	--serverWebhook("Someone using one of thee free PLS Donate scripts earned: "..tostring(Players.LocalPlayer.leaderstats.Raised.value - RaisedC).." robux!")
-if getgenv().oldTestingVersionSettings.autoThanks then
+	if getgenv().oldTestingVersionSettings.autoJump then
+		task.spawn(function()
+			for i = 1, tonumber(newRaised - RaisedD), 1 do
+				game.Players.LocalPlayer.Character.Humanoid.Jump = true
+				wait(1)
+			end 
+game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Did "..tostring(newRaised - RaisedD).. " jumps!".." Current Jumps: "..tostring(RaisedD),"All")
+end)
+	if getgenv().oldTestingVersionSettings.autoThanks then
 		task.spawn(function()
 			task.wait(getgenv().oldTestingVersionSettings.thanksDelay)
 			game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(getgenv().oldTestingVersionSettings.thanksMessage[math.random(#getgenv().oldTestingVersionSettings.thanksMessage)],"All")
@@ -733,19 +744,7 @@ if getgenv().oldTestingVersionSettings.autoThanks then
 	end
 	task.wait(getgenv().oldTestingVersionSettings.textUpdateDelay)
 	update()
-	if getgenv().oldTestingVersionSettings.autoJump then
-	task.spawn(function()
-			for i = 1, tonumber(newRaised - RaisedD), 1 do
-				game.Players.LocalPlayer.Character.Humanoid.Jump = true
-				wait(1)
-			end 
-			game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Did "..tostring(newRaised - RaisedD).. " jumps!".." Current Jumps: "..tostring(RaisedD),"All")
-end) 
-		end
 	end
-end
-end)
-end
 update()
 if game:GetService("CoreGui").imgui.Windows.Window.Title.Text == "Loading..." then
 	game:GetService("CoreGui").imgui.Windows.Window.Title.Text = "PLS DONATE"
@@ -753,4 +752,5 @@ end
 while task.wait(getgenv().oldTestingVersionSettings.serverHopDelay * 60) do
 	if not hopTimer then
 		hopSet()
-	end end end)
+	end
+end end end)
