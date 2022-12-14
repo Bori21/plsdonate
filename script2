@@ -740,17 +740,17 @@ end)
 		task.spawn(function()
 			task.wait(getgenv().oldTestingVersionSettings.thanksDelay)
 			game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(getgenv().oldTestingVersionSettings.thanksMessage[math.random(#getgenv().oldTestingVersionSettings.thanksMessage)],"All")
-		end)
+		end) 
 	end
 	task.wait(getgenv().oldTestingVersionSettings.textUpdateDelay)
 	update()
-	end
+	end end end)
 update()
 if game:GetService("CoreGui").imgui.Windows.Window.Title.Text == "Loading..." then
 	game:GetService("CoreGui").imgui.Windows.Window.Title.Text = "PLS DONATE"
-end
+end 
 while task.wait(getgenv().oldTestingVersionSettings.serverHopDelay * 60) do
 	if not hopTimer then
 		hopSet()
 	end
-end end end)
+end
