@@ -18,6 +18,12 @@ end)
 if game.PlaceId ~= 8737602449 and game.PlaceId ~= 8943844393 then
 	return
 end
+
+if getgenv().loaded then
+	return
+else
+	getgenv().loaded = true
+end
 --Anti-AFK
 local Players = game:GetService("Players")
 local connections = getconnections or get_signal_cons
