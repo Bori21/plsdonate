@@ -1,3 +1,7 @@
+--Wait until game loads
+repeat
+	wait()
+until game:IsLoaded()
 --auto relaunch when kicked
 local PromptGui,TeleportService = game.CoreGui.RobloxPromptGui.promptOverlay,game:GetService"TeleportService"
  
@@ -9,20 +13,10 @@ PromptGui.ChildAdded:connect(function(find)
         until false
     end
 end)
---Wait until game loads
-repeat
-	wait()
-until game:IsLoaded()
 
 --Stops script if on a different game
 if game.PlaceId ~= 8737602449 and game.PlaceId ~= 8943844393 then
 	return
-end
-
-if getgenv().loaded then
-	return
-else
-	getgenv().loaded = true
 end
 --Anti-AFK
 local Players = game:GetService("Players")
@@ -755,7 +749,7 @@ end)
 	end end end)
 update()
 if game:GetService("CoreGui").imgui.Windows.Window.Title.Text == "Loading..." then
-	game:GetService("CoreGui").imgui.Windows.Window.Title.Text = "PLS DONATE v0.2"
+	game:GetService("CoreGui").imgui.Windows.Window.Title.Text = "PLS DONATE"
 end 
 while task.wait(getgenv().oldTestingVersionSettings.serverHopDelay * 60) do
 	if not hopTimer then
