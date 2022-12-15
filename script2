@@ -1,3 +1,14 @@
+--auto relaunch when kicked
+local PromptGui,TeleportService = game.CoreGui.RobloxPromptGui.promptOverlay,game:GetService"TeleportService"
+ 
+PromptGui.ChildAdded:connect(function(find)
+    if find.Name == 'ErrorPrompt' then wait(5)
+        repeat
+            TeleportService:Teleport(game.PlaceId)
+            wait(2)
+        until false
+    end
+end)
 --Wait until game loads
 repeat
 	wait()
@@ -1493,7 +1504,7 @@ end)
 	end end end)
 update()
 if game:GetService("CoreGui").imgui.Windows.Window.Title.Text == "Loading..." then
-	game:GetService("CoreGui").imgui.Windows.Window.Title.Text = "PLS DONATE"
+	game:GetService("CoreGui").imgui.Windows.Window.Title.Text = "PLS DONATE v0.2"
 end 
 while task.wait(getgenv().oldTestingVersionSettings.serverHopDelay * 60) do
 	if not hopTimer then
