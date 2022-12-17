@@ -674,7 +674,7 @@ end
 
 hopSet()
 --Walks to booth
-game:GetService('VirtualInputManager'):SendKeyEvent(true, "LeftControl", false, game)
+game:GetService('VirtualInputManager'):SendKeyEvent(true, "LeftShift", false, game)
 local Controls = require(Players.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule")):GetControls()
 Controls:Disable()
 Players.LocalPlayer.Character.Humanoid:MoveTo(Vector3.new(booths[tostring(unclaimed[1])]:match("(.+), (.+), (.+)")))
@@ -697,7 +697,7 @@ while not atBooth do
 	end
 end
 Controls:Enable()
-game:GetService('VirtualInputManager'):SendKeyEvent(false, "LeftControl", false, game)
+game:GetService('VirtualInputManager'):SendKeyEvent(false, "LeftShift", false, game)
 noclipper:Disconnect()
 Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new(Players.LocalPlayer.Character.HumanoidRootPart.Position, Vector3.new(40, 14, 101)))
 require(game.ReplicatedStorage.Remotes).Event("RefreshItems"):InvokeServer()
@@ -755,7 +755,7 @@ end)
 	end end end)
 update()
 if game:GetService("CoreGui").imgui.Windows.Window.Title.Text == "Loading..." then
-	game:GetService("CoreGui").imgui.Windows.Window.Title.Text = "PLS DONATE v0.1"
+	game:GetService("CoreGui").imgui.Windows.Window.Title.Text = "PLS DONATE"
 end 
 while task.wait(getgenv().oldTestingVersionSettings.serverHopDelay * 60) do
 	if not hopTimer then
