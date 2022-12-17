@@ -1,3 +1,6 @@
+repeat
+	wait()
+until game:IsLoaded()
 --auto relaunch when kicked
 local PromptGui,TeleportService = game.CoreGui.RobloxPromptGui.promptOverlay,game:GetService"TeleportService"
  
@@ -10,9 +13,6 @@ PromptGui.ChildAdded:connect(function(find)
     end
 end)
 --Wait until game loads
-repeat
-	wait()
-until game:IsLoaded()
 
 --Stops script if on a different game
 if game.PlaceId ~= 8737602449 and game.PlaceId ~= 8943844393 then
@@ -928,7 +928,7 @@ end
 
 hopSet()
 --Walks to booth
-game:GetService('VirtualInputManager'):SendKeyEvent(true, "LeftControl", false, game)
+game:GetService('VirtualInputManager'):SendKeyEvent(true, "LeftShift", false, game)
 local Controls = require(game.Players.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule")):GetControls()
 Controls:Disable()
 game.Players.LocalPlayer.Character.Humanoid:MoveTo(Vector3.new(booths[tostring(unclaimed[1])]:match("(.+), (.+), (.+)")))
@@ -951,7 +951,7 @@ while not atBooth do
 	end
 end
 Controls:Enable()
-game:GetService('VirtualInputManager'):SendKeyEvent(false, "LeftControl", false, game)
+game:GetService('VirtualInputManager'):SendKeyEvent(false, "LeftShift", false, game)
 noclipper:Disconnect()
 game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new(game.Players.LocalPlayer.Character.HumanoidRootPart.Position, Vector3.new(40, 14, 101)))
 require(game.ReplicatedStorage.Remotes).Event("RefreshItems"):InvokeServer()
