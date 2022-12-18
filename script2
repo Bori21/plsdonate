@@ -96,7 +96,7 @@ if isfile("plsdonateoldtestingversion.txt") then
 			errMsg = Instance.new("Hint")
 			errMsg.Parent = game.workspace
 			errMsg.Text = tostring("oldTestingVersionSettings reset due to error: ".. er)
-			task.wait(15)
+			task.wait()
 			errMsg:Destroy()
 		end)
 		delfile("plsdonateoldtestingversion.txt")
@@ -166,7 +166,7 @@ local function slider(value, whichSlider)
 		return
 	end
 	sliderInProgress = true
-	task.wait(5)
+	task.wait()
 	if getgenv().oldTestingVersionSettings[whichSlider] == value then
 		saveoldTestingVersionSettings()
 		sliderInProgress = false;
@@ -209,10 +209,10 @@ local function update()
 		if myBooth.Sign.TextLabel.Text ~= boothText then
 			if string.find(myBooth.Sign.TextLabel.Text, "# #") or string.find(myBooth.Sign.TextLabel.Text, "##") then
 				require(game.ReplicatedStorage.Remotes).Event("SetBoothText"):FireServer("your text here", "booth")
-				task.wait(3)
+				task.wait(1)
 			end
 			require(game.ReplicatedStorage.Remotes).Event("SetBoothText"):FireServer(boothText, "booth")
-			task.wait(3)
+			task.wait(1)
 			if string.find(myBooth.Sign.TextLabel.Text, "# #") or string.find(myBooth.Sign.TextLabel.Text, "##") and getgenv().oldTestingVersionSettings.censorHop and not getgenv().censored then
 				queueonteleport("getgenv().censored = true")
 				serverHop()
@@ -229,10 +229,10 @@ local function update()
 		if currentSign ~= signText then
 			if string.find(currentSign, "# #") or string.find(currentSign, "##") then
 				require(game.ReplicatedStorage.Remotes).Event("SetBoothText"):FireServer("your text here", "sign")
-				task.wait(3)
+				task.wait(1)
 			end
 			require(game.ReplicatedStorage.Remotes).Event("SetBoothText"):FireServer(signText, "sign")
-			task.wait(3)
+			task.wait(1)
 			if string.find(currentSign, "# #") or string.find(currentSign, "##") and getgenv().oldTestingVersionSettings.censorHop and not getgenv().censored then
 				queueonteleport("getgenv().censored = true")
 				serverHop()
@@ -283,7 +283,7 @@ local textUpdateToggle = boothTab:AddSwitch("Text Update", function(bool)
 	end
 end)
 textUpdateToggle:Set(getgenv().oldTestingVersionSettings.textUpdateToggle)
-task.wait(12.5)
+task.wait(5)
 local textUpdateDelay = boothTab:AddSlider("Text Update Delay (S)", function(x) 
 	if oldTestingVersionSettingsLock then
 		return 
@@ -674,7 +674,7 @@ end
 
 hopSet()
 --Walks to booth
-game:GetService('VirtualInputManager'):SendKeyEvent(true, "LeftShift", false, game)
+game:GetService('VirtualInputManager'):SendKeyEvent(true, "LeftControl", false, game)
 local Controls = require(Players.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule")):GetControls()
 Controls:Disable()
 Players.LocalPlayer.Character.Humanoid:MoveTo(Vector3.new(booths[tostring(unclaimed[1])]:match("(.+), (.+), (.+)")))
@@ -697,7 +697,7 @@ while not atBooth do
 	end
 end
 Controls:Enable()
-game:GetService('VirtualInputManager'):SendKeyEvent(false, "LeftShift", false, game)
+game:GetService('VirtualInputManager'):SendKeyEvent(false, "LeftControl", false, game)
 noclipper:Disconnect()
 Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new(Players.LocalPlayer.Character.HumanoidRootPart.Position, Vector3.new(40, 14, 101)))
 require(game.ReplicatedStorage.Remotes).Event("RefreshItems"):InvokeServer()
@@ -755,7 +755,7 @@ end)
 	end end end)
 update()
 if game:GetService("CoreGui").imgui.Windows.Window.Title.Text == "Loading..." then
-	game:GetService("CoreGui").imgui.Windows.Window.Title.Text = "PLS DONATE"
+	game:GetService("CoreGui").imgui.Windows.Window.Title.Text = "PLS DONATE v0.2"
 end 
 while task.wait(getgenv().oldTestingVersionSettings.serverHopDelay * 60) do
 	if not hopTimer then
