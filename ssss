@@ -272,7 +272,6 @@ local textUpdateToggle = boothTab:AddSwitch("Text Update", function(bool)
 	end
 end)
 textUpdateToggle:Set(getgenv().updatedVersionSettings.textUpdateToggle)
-task.wait(12.5)
 local textUpdateDelay = boothTab:AddSlider("Text Update Delay (S)", function(x) 
 	if updatedVersionSettingsLock then
 		return 
